@@ -18,44 +18,60 @@
                 <span>搜索</span>
             </div>
         </div>
-        <div class="container">
-            <div class="people-wrap" v-for="(item, index) in insuranceList" :key='index'>
-                <div class="name-box">
-                    <div class="name">戴安娜</div>
-                    <div class="is-insurance">已交保</div>
-                </div>
-                <div class="competite-info">
-                    <div class="competite-name">
-                        <span>赛事名称：</span>
-                        <span>新版赛事管理费下限测试</span>
+        <scroll @refresh="refresh" @loadmore="loadmore">
+            <div class="container">
+                <div class="people-wrap" v-for="(item, index) in insuranceList" :key='index'>
+                    <div class="name-box">
+                        <div class="name">戴安娜</div>
+                        <div class="is-insurance">已交保</div>
                     </div>
-                    <div class="group-name">
-                        <span>小组名称：</span>
-                        <span>围棋一组</span>
+                    <div class="competite-info">
+                        <div class="competite-name">
+                            <span>赛事名称：</span>
+                            <span>新版赛事管理费下限测试</span>
+                        </div>
+                        <div class="group-name">
+                            <span>小组名称：</span>
+                            <span>围棋一组</span>
+                        </div>
+                        <div class="begin-time">
+                            <span>起止时间：</span>
+                            <span>2019-02-18至2019-03-18</span>
+                        </div>
                     </div>
-                    <div class="begin-time">
-                        <span>起止时间：</span>
-                        <span>2019-02-18至2019-03-18</span>
+                    <div class="insurance-sum">
+                        <span>保险金额:</span>
+                        <span>10元</span>
+                    </div>
+                    <div class="surrender">
+                        退保
                     </div>
                 </div>
-                <div class="insurance-sum">
-                    <span>保险金额:</span>
-                    <span>10元</span>
-                </div>
-                <div class="surrender">
-                    退保
-                </div>
-            </div>
-        </div>
+            </div>            
+        </scroll>
         <transition name="slide">
             <div class="select-content" v-if="isShow">
                 <div class="mask" @click="selectShow($event)"></div>
                 <div class="select-box">
                     <div class="select-hint">保险起止时间</div>
                     <div class="time-wrap">
-                        <div class="time-start">2019-02-18</div>
-                        <span>-</span>
-                        <div class="time-end">2019-02-18</div>
+                        <el-date-picker
+                            class="data-picker"
+                            v-model="value11"
+                            type="date"
+                            :placeholder="today|moment('YYYY-MM-DD')"
+                            format="yyyy-MM-dd"
+                            value-format="yyyy-MM-dd">
+                        </el-date-picker>
+                        <!-- <div class="time-start">2019-02-18</div> -->
+                        <span class="line"></span>
+                        <el-date-picker
+                            v-model="value12"
+                            type="date"
+                            :placeholder="today|moment('YYYY-MM-DD')"
+                            format="yyyy-MM-dd"
+                            value-format="yyyy-MM-dd">
+                        </el-date-picker>
                     </div>
                     <div class="status-hint">
                         状态
@@ -75,12 +91,15 @@
     </div>
 </template>
 <script>
+import Scroll from '@/components/scroll.vue'
 import axios from 'axios'
 import Vue from 'vue'
 import {postInsuranceClassify} from '../api/api.js'
 export default {
     data () {
         return {
+            value11: '',
+            value12: '',
             isShow: false,
             selectList: [
                 '全部',
@@ -92,7 +111,8 @@ export default {
                 true,
                 false
             ],
-            insuranceList: [
+            insuranceList: [],
+            oneInsurance: [
                 {
                     "policy_holderd_name":"刘忠良",//投保人姓名
                     "state":"3",//保单状态 1为待投保,2为成功,3为退保,4为失败
@@ -117,10 +137,32 @@ export default {
                     "end_date":"2019-02-17 00:00:00.000",  //保险结束时间
                     "amount_payable":"1000",  //应付金额，实际金额为 amount_payable/100
                 },
+                {
+                    "policy_holderd_name":"刘忠良",//投保人姓名
+                    "state":"3",//保单状态 1为待投保,2为成功,3为退保,4为失败
+                    "title":"退费测试赛1",  //赛事名
+                    "start_date":"2019-02-16 00:00:00.000",  //保险开始时间
+                    "end_date":"2019-02-17 00:00:00.000",  //保险结束时间
+                    "amount_payable":"1000",  //应付金额，实际金额为 amount_payable/100
+                }
             ]
         }
     },
+    components: {
+        Scroll
+    },
     methods: {
+        initData () {
+            this.insuranceList.push(...this.oneInsurance);
+        },
+        refresh () {
+            this.insuranceList = [];
+            this.initData();
+        },
+        loadmore (fun) {
+            this.insuranceList.push(...this.oneInsurance);
+            fun();
+        },
         toSearch (event) {
             console.log(event)
             this.$router.push({
@@ -140,11 +182,17 @@ export default {
             })
         }
     },
+    created () {
+        this.today = Date.now();
+        console.log(this,this.$moment);
+        console.log(this.moment);
+        this.initData();
+    },
     mounted() {
         Vue.nextTick(() => {
-            postInsuranceClassify().then((res) => {
-                console.log(res)
-            })
+            // postInsuranceClassify().then((res) => {
+            //     console.log(res)
+            // })
         })
     }
 }
@@ -315,19 +363,39 @@ export default {
                 margin-bottom: 40px;
                 display: flex;
                 justify-content: space-around;
-                span{
-                    font-size: 40px;/*px*/
+                .line{
+                    width: 20px;
+                    display: block;
+                    position: relative;
+                    // font-size: 40px;/*px*/
                 }
-                div{
-                    width: 40%;
-                    height: 60px;
-                    border-radius: 30px;
-                    line-height: 60px;
-                    color: #666;
-                    font-size: 26px;/*px*/
+                .line::after{
+                    content: '';
+                    width: 100%;
+                    height: 2px;
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    background-color: #666;
+                }
+                .el-date-editor{
                     background-color: #f4f4f4;
-                    text-align: center;
+                    .el-input__inner{
+                        text-align: center;
+                        font-size: 26px;/*px*/
+                        color: #666;
+                    }
                 }
+                // div{
+                //     width: 40%;
+                //     height: 60px;
+                //     border-radius: 30px;
+                //     line-height: 60px;
+                //     color: #666;
+                //     font-size: 26px;/*px*/
+                //     background-color: #f4f4f4;
+                //     text-align: center;
+                // }
             }
             .status-hint{
                 font-size: 30px; /*px*/

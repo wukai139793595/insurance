@@ -70,8 +70,23 @@ import {postPolicyCancel} from '@/api/api.js'
             }
         },
         methods: {
+            // 查看保险开始时间是否大于今天
+            checkStartTime () {
+                let nowTime = Date.now();
+                let startTime = new Date(this.start_date).getTime();
+                if (startTime < nowTime) {
+                    return false
+                } else {
+                    return true
+                }
+            },
             toSurrender (event) {
                 if (this.state != 2) {
+                    return
+                }
+                
+                if (!this.checkStartTime()) {
+                    this.$message('保险已经开始，不能退保');
                     return
                 }
                 this.$confirm('是否确认退保', '提示', {
@@ -120,11 +135,7 @@ import {postPolicyCancel} from '@/api/api.js'
                     case 4:
                         return '投保失败';
                 }
-            },
-            formatTime (value) {
-                var arr = value.split(' ');
-                return arr[0]
-            }            
+            }           
         }
     }
 </script>

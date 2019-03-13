@@ -18,7 +18,7 @@
                     :groupname='item.groupname'
                     :start_date='item.start_date'
                     :end_date='item.end_date'
-                    :amount_payable='item.amount_payable'
+                    :real_amount='item.real_amount'
                     :order_id='item.order_id'
                     :insured_id='item.insured_id'
                     />
@@ -48,6 +48,7 @@ export default {
                 this.$message('请输入要搜索的内容');
                 return
             }
+            this.page = 1;
             this.insuranceList = [];
             this.initData();
         },

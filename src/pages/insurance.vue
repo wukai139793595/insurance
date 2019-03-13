@@ -29,7 +29,7 @@
                     :groupname='item.groupname'
                     :start_date='item.start_date'
                     :end_date='item.end_date'
-                    :amount_payable='item.amount_payable'
+                    :real_amount='item.real_amount'
                     :order_id='item.order_id'
                     :insured_id='item.insured_id'
                     />
@@ -113,7 +113,7 @@ export default {
                     "title":"退费测试赛1",  //赛事名
                     "start_date":"2019-02-16 00:00:00.000",  //保险开始时间
                     "end_date":"2019-02-17 00:00:00.000",  //保险结束时间
-                    "amount_payable":1000,  //应付金额，实际金额为 amount_payable/100
+                    "real_amount":1000,  //应付金额，实际金额为 real_amount/100
                 },
                 {
                     "policy_holderd_name":"刘忠良",//投保人姓名
@@ -121,7 +121,7 @@ export default {
                     "title":"退费测试赛1",  //赛事名
                     "start_date":"2019-02-16 00:00:00.000",  //保险开始时间
                     "end_date":"2019-02-17 00:00:00.000",  //保险结束时间
-                    "amount_payable":1000,  //应付金额，实际金额为 amount_payable/100
+                    "real_amount":1000,  //应付金额，实际金额为 real_amount/100
                 },
                 {
                     "policy_holderd_name":"刘忠良",//投保人姓名
@@ -129,7 +129,7 @@ export default {
                     "title":"退费测试赛1",  //赛事名
                     "start_date":"2019-02-16 00:00:00.000",  //保险开始时间
                     "end_date":"2019-02-17 00:00:00.000",  //保险结束时间
-                    "amount_payable":1000,  //应付金额，实际金额为 amount_payable/100
+                    "real_amount":1000,  //应付金额，实际金额为 real_amount/100
                 },
                 {
                     "policy_holderd_name":"刘忠良",//投保人姓名
@@ -137,7 +137,7 @@ export default {
                     "title":"退费测试赛1",  //赛事名
                     "start_date":"2019-02-16 00:00:00.000",  //保险开始时间
                     "end_date":"2019-02-17 00:00:00.000",  //保险结束时间
-                    "amount_payable":1000,  //应付金额，实际金额为 amount_payable/100
+                    "real_amount":1000,  //应付金额，实际金额为 real_amount/100
                 }
             ]
         }

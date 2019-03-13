@@ -20,7 +20,7 @@
         </div>
         <div class="insurance-sum">
             <span>保险金额:</span>
-            <span>{{amount_payable}}元</span>
+            <span>{{real_amount | divisionHundred}}元</span>
         </div>
         <div class="surrender-normal" :class="{surrender:(state === 2)}" @click="toSurrender($event)">
             退保
@@ -56,7 +56,7 @@ import {postPolicyCancel} from '@/api/api.js'
                 type: String,
                 default: ''
             },
-            amount_payable: {
+            real_amount: {
                 type: Number,
                 default: 0
             },
@@ -96,10 +96,15 @@ import {postPolicyCancel} from '@/api/api.js'
                         },err => {
                                 this.$message.error('网络错误')
                         })
+                    }).catch(() => {
+                        console.log('取消退保')
                     })
             }
         },
         filters: {
+            divisionHundred (value) {
+                return (Number(value)/100).toFixed(2);
+            },
             policyState (value) {
                 switch (value) {
                     case "1":

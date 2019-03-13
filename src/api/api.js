@@ -1,10 +1,11 @@
 import axios from 'axios'
 import Qs from 'qs'
 axios.defaults.widthCredentials = true;
+const PROCOTOL_HEAD = 'http://dev-open.'
 if (process.env.NODE_ENV == 'development') {
-    axios.defaults.baseURL = 'http://dev-open.yunbisai.com';
+    axios.defaults.baseURL = PROCOTOL_HEAD + 'yunbisai.com';
 } else if (process.env.NODE_ENV == 'production') {
-    axios.defaults.baseURL = 'http://dev-open.yunbisai.com';
+    axios.defaults.baseURL = PROCOTOL_HEAD + 'yunbisai.com';
 }
 
 let post = function (url, params) {
@@ -23,5 +24,7 @@ let post = function (url, params) {
         })
     })
 }
-
-export const postInsuranceClassify = (params) => {return post('/index/index/getRisk',params)};
+//获取保单信息
+export const postQueryPolicy = (params) => {return post('/index/index/getPolicy',params)};
+//退保
+export const postPolicyCancel = (params) => {return post('/index/index/policyCancell', params)}

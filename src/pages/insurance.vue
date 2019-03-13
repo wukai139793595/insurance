@@ -20,33 +20,19 @@
         </div>
         <scroll @refresh="refresh" @loadmore="loadmore">
             <div class="container">
-                <div class="people-wrap" v-for="(item, index) in insuranceList" :key='index'>
-                    <div class="name-box">
-                        <div class="name">戴安娜</div>
-                        <div class="is-insurance">已交保</div>
-                    </div>
-                    <div class="competite-info">
-                        <div class="competite-name">
-                            <span>赛事名称：</span>
-                            <span>新版赛事管理费下限测试</span>
-                        </div>
-                        <div class="group-name">
-                            <span>小组名称：</span>
-                            <span>围棋一组</span>
-                        </div>
-                        <div class="begin-time">
-                            <span>起止时间：</span>
-                            <span>2019-02-18至2019-03-18</span>
-                        </div>
-                    </div>
-                    <div class="insurance-sum">
-                        <span>保险金额:</span>
-                        <span>10元</span>
-                    </div>
-                    <div class="surrender">
-                        退保
-                    </div>
-                </div>
+                <person-info 
+                    v-for="(item, index) in insuranceList" :key='index'
+                    @changeState='changeState(index)'
+                    :insured_name='item.insured_name'
+                    :state='item.state'
+                    :title='item.title'
+                    :groupname='item.groupname'
+                    :start_date='item.start_date'
+                    :end_date='item.end_date'
+                    :amount_payable='item.amount_payable'
+                    :order_id='item.order_id'
+                    :insured_id='item.insured_id'
+                    />
             </div>            
         </scroll>
         <transition name="slide">
@@ -57,7 +43,7 @@
                     <div class="time-wrap">
                         <el-date-picker
                             class="data-picker"
-                            v-model="value11"
+                            v-model="startTime"
                             type="date"
                             :placeholder="today|moment('YYYY-MM-DD')"
                             format="yyyy-MM-dd"
@@ -66,7 +52,7 @@
                         <!-- <div class="time-start">2019-02-18</div> -->
                         <span class="line"></span>
                         <el-date-picker
-                            v-model="value12"
+                            v-model="endTime"
                             type="date"
                             :placeholder="today|moment('YYYY-MM-DD')"
                             format="yyyy-MM-dd"
@@ -77,13 +63,13 @@
                         状态
                     </div>
                     <div class="type-wrap">
-                        <div v-for="(ele, ind) in selectList" :key="ind" :class="{isSelect: isSelectArr[ind]}" @click="selectChange($event, ind)">
+                        <div v-for="(ele, ind) in selectList" :key="ind" :class="{isSelect: isSelectArr[ind] == state}" @click="selectChange($event, ind)">
                             {{selectList[ind]}}
                         </div>
                     </div>
                     <div class="btn-wrap">
-                        <div class="reset">重置</div>
-                        <div class="submit">确认</div>
+                        <div class="reset" @click="toReset($event)">重置</div>
+                        <div class="submit" @click="toSubmit($event)">确认</div>
                     </div>
                 </div>
             </div>
@@ -92,76 +78,125 @@
 </template>
 <script>
 import Scroll from '@/components/scroll.vue'
-import axios from 'axios'
+import personInfo from '@/components/personInfo.vue'
 import Vue from 'vue'
-import {postInsuranceClassify} from '../api/api.js'
+import {postQueryPolicy,postPolicyCancel} from '@/api/api.js'
 export default {
     data () {
         return {
-            value11: '',
-            value12: '',
+            startTime: '',
+            endTime: '',
+            isClock: true, //请求数据锁
             isShow: false,
+            page: 1,
+            limit: 10,
+            total: 0,
+            totalPage: 0,
+            state: '',            
             selectList: [
                 '全部',
                 '已交保',
                 '已退保'
             ],
             isSelectArr: [
-                false,
-                true,
-                false
+                '',
+                '2',
+                '3'
+                // false,
+                // true,
+                // false
             ],
-            insuranceList: [],
-            oneInsurance: [
+            insuranceList: [
                 {
                     "policy_holderd_name":"刘忠良",//投保人姓名
-                    "state":"3",//保单状态 1为待投保,2为成功,3为退保,4为失败
+                    "state":2,//保单状态 1为待投保,2为成功,3为退保,4为失败
                     "title":"退费测试赛1",  //赛事名
                     "start_date":"2019-02-16 00:00:00.000",  //保险开始时间
                     "end_date":"2019-02-17 00:00:00.000",  //保险结束时间
-                    "amount_payable":"1000",  //应付金额，实际金额为 amount_payable/100
+                    "amount_payable":1000,  //应付金额，实际金额为 amount_payable/100
                 },
                 {
                     "policy_holderd_name":"刘忠良",//投保人姓名
-                    "state":"3",//保单状态 1为待投保,2为成功,3为退保,4为失败
+                    "state":3,//保单状态 1为待投保,2为成功,3为退保,4为失败
                     "title":"退费测试赛1",  //赛事名
                     "start_date":"2019-02-16 00:00:00.000",  //保险开始时间
                     "end_date":"2019-02-17 00:00:00.000",  //保险结束时间
-                    "amount_payable":"1000",  //应付金额，实际金额为 amount_payable/100
+                    "amount_payable":1000,  //应付金额，实际金额为 amount_payable/100
                 },
                 {
                     "policy_holderd_name":"刘忠良",//投保人姓名
-                    "state":"3",//保单状态 1为待投保,2为成功,3为退保,4为失败
+                    "state":2,//保单状态 1为待投保,2为成功,3为退保,4为失败
                     "title":"退费测试赛1",  //赛事名
                     "start_date":"2019-02-16 00:00:00.000",  //保险开始时间
                     "end_date":"2019-02-17 00:00:00.000",  //保险结束时间
-                    "amount_payable":"1000",  //应付金额，实际金额为 amount_payable/100
+                    "amount_payable":1000,  //应付金额，实际金额为 amount_payable/100
                 },
                 {
                     "policy_holderd_name":"刘忠良",//投保人姓名
-                    "state":"3",//保单状态 1为待投保,2为成功,3为退保,4为失败
+                    "state":3,//保单状态 1为待投保,2为成功,3为退保,4为失败
                     "title":"退费测试赛1",  //赛事名
                     "start_date":"2019-02-16 00:00:00.000",  //保险开始时间
                     "end_date":"2019-02-17 00:00:00.000",  //保险结束时间
-                    "amount_payable":"1000",  //应付金额，实际金额为 amount_payable/100
+                    "amount_payable":1000,  //应付金额，实际金额为 amount_payable/100
                 }
             ]
         }
     },
     components: {
-        Scroll
+        Scroll,
+        personInfo
     },
     methods: {
         initData () {
-            this.insuranceList.push(...this.oneInsurance);
+            //按页数进行查保
+            this.isClock = true;
+            postQueryPolicy({
+                org_id: '32',
+                entrance: 1,
+                begin_time: this.startTime,
+                end_time: this.endTime,
+                state: this.state,
+                page: this.page,
+                limit: this.limit
+            })
+            .then((res) => {
+                console.log(res)
+                if (res.data.errcode === 0) {
+                    this.total = res.data.total;
+                    this.isClock = false;
+                    this.totalPage = res.data.totalPage;
+                    this.$nextTick(() => {
+                        this.insuranceList.push(...res.data.list);
+                        console.log('page:',this.page);
+                        console.log('total:',this.total);
+                        console.log('count:',this.insuranceList.length);
+                    })
+                } else {
+                    this.$message.error(res.data.msg)
+                }
+            },(err) => {
+                this.$message.error('网络错误')
+            })
         },
+
         refresh () {
+            this.page= 1,
+            this.limit= 10,
+            this.total= 0,
+            this.totalPage= 0, 
             this.insuranceList = [];
             this.initData();
         },
-        loadmore (fun) {
-            this.insuranceList.push(...this.oneInsurance);
-            fun();
+        loadmore (func) {
+            if (this.insuranceList.length < this.total) {
+                if (!this.isClock) {
+                    this.page += 1;
+                    this.initData();
+                }
+                func();
+            }else {
+                func(true);
+            }
         },
         toSearch (event) {
             console.log(event)
@@ -173,27 +208,26 @@ export default {
             this.isShow = !this.isShow;
         },
         selectChange (event, index) {
-            this.isSelectArr = this.isSelectArr.map((ele, ind) => {
-                if (index === ind) {
-                    return true;
-                }else{
-                    return false;
-                }
-            })
+            this.state = this.isSelectArr[index]
+        },
+        changeState (index) {
+            this.insuranceList[index].state = 3;
+            console.log('insurance',this.insuranceList[index].state)
+        },
+        toReset (event) {
+            this.state = '';
+            this.startTime = '';
+            this.endTime = '';
+        },
+        toSubmit (event) {
+            this.isShow = false;
+            this.refresh();
+
         }
     },
     created () {
         this.today = Date.now();
-        console.log(this,this.$moment);
-        console.log(this.moment);
         this.initData();
-    },
-    mounted() {
-        Vue.nextTick(() => {
-            // postInsuranceClassify().then((res) => {
-            //     console.log(res)
-            // })
-        })
     }
 }
 </script>
@@ -266,62 +300,66 @@ export default {
     }
     .container{
         width: 100%;
-        .people-wrap{
-            width: 702px;
-            margin: 0 auto 40px;
-            position: relative;
-            .name-box{
-                width: 100%;
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 26px;
-                .name{
-                    font-size: 30px; /*px*/
-                    font-weight: bold;
-                    color: #333;
-                }
-                .is-insurance{
-                    font-size: 24px; /*px*/
-                    color: #999;
-                }
-            }
-            .competite-info{
-                width: 100%;
-                box-sizing: border-box;
-                padding-left: 40px;
-                font-size: 30px; /*px*/
-                color: #666;
-                margin-bottom: 30px;
-                &>div{
-                    margin-bottom: 10px;
-                }
-            }
-            .insurance-sum{
-                span:nth-of-type(1){
-                    font-size: 26px;/*px*/
-                    color: #999;
-                }
-                span:nth-of-type(2) {
-                    font-size: 28px;/*px*/
-                    color: #333;
-                    font-weight: bold;
-                }
-            }
-            .surrender{
-                position: absolute;
-                bottom: 4px;
-                right: 4px;
-                width: 140px;
-                height: 50px;
-                background-color: #3399ff;
-                border-radius: 25px;
-                font-size: 32px;/*px*/
-                color: #fff;
-                text-align: center;
-                line-height: 50px;
-                font-weight: bold;
-            }
-        }
+        // .people-wrap{
+        //     width: 702px;
+        //     margin: 0 auto 40px;
+        //     position: relative;
+        //     .name-box{
+        //         width: 100%;
+        //         display: flex;
+        //         justify-content: space-between;
+        //         margin-bottom: 26px;
+        //         .name{
+        //             font-size: 30px; /*px*/
+        //             font-weight: bold;
+        //             color: #333;
+        //         }
+        //         .is-insurance{
+        //             font-size: 24px; /*px*/
+        //             color: #999;
+        //         }
+        //     }
+        //     .competite-info{
+        //         width: 100%;
+        //         box-sizing: border-box;
+        //         padding-left: 40px;
+        //         font-size: 30px; /*px*/
+        //         color: #666;
+        //         margin-bottom: 30px;
+        //         &>div{
+        //             margin-bottom: 10px;
+        //         }
+        //     }
+        //     .insurance-sum{
+        //         span:nth-of-type(1){
+        //             font-size: 26px;/*px*/
+        //             color: #999;
+        //         }
+        //         span:nth-of-type(2) {
+        //             font-size: 28px;/*px*/
+        //             color: #333;
+        //             font-weight: bold;
+        //         }
+        //     }
+        //     .surrender-normal{
+        //         position: absolute;
+        //         bottom: 4px;
+        //         right: 4px;
+        //         width: 140px;
+        //         height: 50px;
+        //         background-color: #eee;
+        //         border-radius: 25px;
+        //         font-size: 32px;/*px*/
+        //         color: #666;
+        //         text-align: center;
+        //         line-height: 50px;
+        //         font-weight: bold;
+        //     }
+        //     .surrender{
+        //         background-color: #3399ff;   
+        //         color: #fff;             
+        //     }
+        // }
     }
     .slide-enter-active{
         transition:all 0.5s ease;

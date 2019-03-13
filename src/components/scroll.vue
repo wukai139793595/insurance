@@ -69,9 +69,9 @@
 
       touchStart(e) {
         const touch = e.touches[0];
-        console.log(e.touches);
+        // console.log(e.touches);
         const scrollTop = this.touch.scroll.scrollTop;
-        console.log(this.touch.scroll.scrollTop)
+        // console.log(this.touch.scroll.scrollTop)
         this.touch.startY = touch.pageY;
         this.touch.isTop = scrollTop === 0;
       },
@@ -134,13 +134,13 @@
           this.refreshStatus = 0;
           this.touch.topHasShow = false;
           this.showHeader = false;
-          console.log(this.showHeader)
+          // console.log(this.showHeader)
           // this.disableUpPull = true;
         }, time * 1000)
       },
 
       loadmoreDone( noMore ) {
-        console.log('loadmoreDone')
+        // console.log('loadmoreDone')
         this.loaded = false;
         this.noMore = !!noMore;
 
@@ -149,7 +149,7 @@
       },
 
       scroll() {
-        console.log('nomore',this.noMore)
+        // console.log('nomore',this.noMore)
         if( this.disableDownPull ) return;
 
         if( this.noMore ) {
@@ -164,7 +164,7 @@
 
         if(scrollTop + el.clientHeight + bottomDistance >= scrollHeight) {
           if(this.loaded) return;
-          console.log(1);
+          // console.log(1);
 
           this.loaded = true;
           this.showFooter = true;

@@ -28,3 +28,32 @@ let post = function (url, params) {
 export const postQueryPolicy = (params) => {return post('/index/index/getPolicy',params)};
 //退保
 export const postPolicyCancel = (params) => {return post('/index/index/policyCancell', params)}
+
+
+
+// import axios from 'axios'
+// axios.defaults.widthCredentials = true;
+// const PROCOTOL_HEAD = 'http://192.168.2.81:3000'
+
+// let post = function (url, params) {
+//     let paramsStr = '?';
+//     let fullUrl = '';
+//     for (let prop in params) {
+//         paramsStr += `${prop}=${params[prop]}&`;
+//     }
+//     fullUrl = PROCOTOL_HEAD + url + paramsStr;
+//     console.log(fullUrl)
+//     return new Promise((resolve, reject) => {
+//         axios.get(fullUrl)
+//         .then((res) => {
+//             resolve(res)
+//         })
+//         .catch((err) => {
+//             reject(err)
+//         })
+//     })
+// }
+// //获取保单信息
+// export const postQueryPolicy = (params) => {return post('/index/index/getPolicy',params)};
+// //退保
+// export const postPolicyCancel = (params) => {return post('/index/index/policyCancell', params)}

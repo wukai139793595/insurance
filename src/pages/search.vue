@@ -3,7 +3,7 @@
         <div class="wrapper">
             <div class="input-wrap">
                 <img src="../assets/icon/search-icon.png" alt="" @click="toSearch($event)">
-                <input type="text" placeholder="请输入姓名/小组/赛事" v-model="keywords">
+                <input type="text" placeholder="请输入姓名/小组/赛事" v-model="keywords" @keyup.enter='toSearch($event)'>
             </div>
             <div class="cancel" @click="toInsurance($event)">取消</div>
         </div>

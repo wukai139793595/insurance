@@ -114,6 +114,7 @@ export default {
                     "start_date":"2019-02-16 00:00:00.000",  //保险开始时间
                     "end_date":"2019-02-17 00:00:00.000",  //保险结束时间
                     "real_amount":1000,  //应付金额，实际金额为 real_amount/100
+                    "insured_name":"方亮"
                 },
                 {
                     "policy_holderd_name":"刘忠良",//投保人姓名
@@ -122,6 +123,7 @@ export default {
                     "start_date":"2019-02-16 00:00:00.000",  //保险开始时间
                     "end_date":"2019-02-17 00:00:00.000",  //保险结束时间
                     "real_amount":1000,  //应付金额，实际金额为 real_amount/100
+                    "insured_name":"方亮"
                 },
                 {
                     "policy_holderd_name":"刘忠良",//投保人姓名
@@ -130,6 +132,7 @@ export default {
                     "start_date":"2019-02-16 00:00:00.000",  //保险开始时间
                     "end_date":"2019-02-17 00:00:00.000",  //保险结束时间
                     "real_amount":1000,  //应付金额，实际金额为 real_amount/100
+                    "insured_name":"方亮"
                 },
                 {
                     "policy_holderd_name":"刘忠良",//投保人姓名
@@ -138,6 +141,7 @@ export default {
                     "start_date":"2019-02-16 00:00:00.000",  //保险开始时间
                     "end_date":"2019-02-17 00:00:00.000",  //保险结束时间
                     "real_amount":1000,  //应付金额，实际金额为 real_amount/100
+                    "insured_name":"方亮"
                 }
             ]
         }
@@ -238,15 +242,17 @@ export default {
     position: relative;
     display: inline-block;
     .head{
-        width: 702px;
+        width: 750px;
         margin-left: auto;
         margin-right: auto;
-        height: 40px;
+        height: 60px;
+        padding: 0 24px;
         box-sizing: border-box;
         display: flex;
         justify-content: space-between;
         margin-top: 20px;
         margin-bottom: 30px;
+        box-shadow: 4px 4px 10px #eee;
         .turn-back{
             width: 40px;
             height: 40px;
@@ -274,21 +280,24 @@ export default {
     }
     .search{
         width: 100%;
-        height: 40px;
+        height: 60px;
         margin-top: 10px;
         margin-bottom: 40px;
         box-sizing: border-box;
         position: relative;
         .input{
             width: 702px;
-            height: 40px;
+            height: 60px;
             margin: 0 auto;
-            line-height: 40px;
+            line-height: 60px;
             background-color: #f6f6f6;
+            border-radius: 30px;
             img{
+                position: relative;
+                top: -4px;
                 width: 40px;
                 height: 40px;
-                vertical-align: top;
+                vertical-align: middle;
                 margin-left: 40px;
             }
             span{

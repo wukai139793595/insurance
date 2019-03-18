@@ -144,8 +144,10 @@ import {postPolicyCancel} from '@/api/api.js'
 
 .person-info{
     width: 702px;
-    margin: 0 auto 40px;
+    margin: 0 auto 20px;
     position: relative;
+    padding-bottom: 40px;
+    border-bottom: 2px solid #f4f4f4;
     .name-box{
         width: 100%;
         display: flex;
@@ -164,10 +166,13 @@ import {postPolicyCancel} from '@/api/api.js'
     .competite-info{
         width: 100%;
         box-sizing: border-box;
-        padding-left: 40px;
+        background-color: #f6f6f6;
+        // padding-left: 40px;
+        padding: 20px 0 20px 40px;
         font-size: 32px; /*px*/
         color: #666;
         margin-bottom: 30px;
+
         &>div{
             margin-bottom: 10px;
         }
@@ -185,7 +190,7 @@ import {postPolicyCancel} from '@/api/api.js'
     }
     .surrender-normal{
         position: absolute;
-        bottom: 4px;
+        bottom: 30px;
         right: 4px;
         width: 140px;
         height: 50px;

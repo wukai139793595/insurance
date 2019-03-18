@@ -125,14 +125,17 @@ export default {
     width: 750px;
     height: 100%;
     .wrapper{
-        width: 702px;
-        height: 50px;
+        width: 750px;
+        height: 60px;
+        box-sizing: border-box;
+        padding: 0 24px;
         margin: 20px auto 60px auto;
         display: flex;
         justify-content: space-between;
+        box-shadow: 2px 2px 2px #eee;
         .input-wrap{
             width: 500px;
-            background-color: #f6f6f6;
+            // background-color: #f6f6f6;
             img{
                 width: 50px;
                 height: 50px;

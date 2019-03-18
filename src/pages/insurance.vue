@@ -262,7 +262,7 @@ export default {
             }
         }
         .title{
-            font-size: 30px;/*px*/
+            font-size: 30px;
             color: #333;
         }
         .select{
@@ -273,7 +273,7 @@ export default {
                 vertical-align: top;
             }
             span{
-                font-size: 30px;/*px*/
+                font-size: 30px;
                 color: #676767;
             }
         }
@@ -301,7 +301,7 @@ export default {
                 margin-left: 40px;
             }
             span{
-                font-size: 28px; /*px*/
+                font-size: 28px; 
                 color: #999;
                 margin-left: 20px;
             }
@@ -319,12 +319,12 @@ export default {
         //         justify-content: space-between;
         //         margin-bottom: 26px;
         //         .name{
-        //             font-size: 30px; /*px*/
+        //             font-size: 30px; 
         //             font-weight: bold;
         //             color: #333;
         //         }
         //         .is-insurance{
-        //             font-size: 24px; /*px*/
+        //             font-size: 24px; 
         //             color: #999;
         //         }
         //     }
@@ -332,7 +332,7 @@ export default {
         //         width: 100%;
         //         box-sizing: border-box;
         //         padding-left: 40px;
-        //         font-size: 30px; /*px*/
+        //         font-size: 30px; 
         //         color: #666;
         //         margin-bottom: 30px;
         //         &>div{
@@ -341,11 +341,11 @@ export default {
         //     }
         //     .insurance-sum{
         //         span:nth-of-type(1){
-        //             font-size: 26px;/*px*/
+        //             font-size: 26px;
         //             color: #999;
         //         }
         //         span:nth-of-type(2) {
-        //             font-size: 28px;/*px*/
+        //             font-size: 28px;
         //             color: #333;
         //             font-weight: bold;
         //         }
@@ -358,7 +358,7 @@ export default {
         //         height: 50px;
         //         background-color: #eee;
         //         border-radius: 25px;
-        //         font-size: 32px;/*px*/
+        //         font-size: 32px;
         //         color: #666;
         //         text-align: center;
         //         line-height: 50px;
@@ -401,7 +401,7 @@ export default {
             position: relative;
             .select-hint{
                 color: #333;
-                font-size: 30px; /*px*/
+                font-size: 30px; 
                 font-weight: bold;
                 text-indent: 40px;
             }
@@ -414,7 +414,7 @@ export default {
                     width: 20px;
                     display: block;
                     position: relative;
-                    // font-size: 40px;/*px*/
+                    // font-size: 40px;
                 }
                 .line::after{
                     content: '';
@@ -429,7 +429,7 @@ export default {
                     background-color: #f4f4f4;
                     .el-input__inner{
                         text-align: center;
-                        font-size: 26px;/*px*/
+                        font-size: 26px;
                         color: #666;
                     }
                 }
@@ -439,13 +439,13 @@ export default {
                 //     border-radius: 30px;
                 //     line-height: 60px;
                 //     color: #666;
-                //     font-size: 26px;/*px*/
+                //     font-size: 26px;
                 //     background-color: #f4f4f4;
                 //     text-align: center;
                 // }
             }
             .status-hint{
-                font-size: 30px; /*px*/
+                font-size: 30px; 
                 color: #333;
                 font-weight: bold;
                 text-indent: 40px;
@@ -457,7 +457,7 @@ export default {
                 div{
                     width: 160px;
                     height: 60px;
-                    font-size: 30px;/*px*/
+                    font-size: 30px;
                     color: #666;
                     background-color: #f4f4f4;
                     border-radius: 30px;
@@ -483,7 +483,7 @@ export default {
                 height: 100px;
                 line-height: 100px;
                 text-align: center;
-                font-size: 30px; /*px*/
+                font-size: 30px; 
             }
             .reset{
                 border-top: 2px solid #e5e5e5;

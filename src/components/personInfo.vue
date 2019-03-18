@@ -154,12 +154,12 @@ import {postPolicyCancel} from '@/api/api.js'
         justify-content: space-between;
         margin-bottom: 26px;
         .name{
-            font-size: 34px; /*px*/
+            font-size: 30px; 
             font-weight: bold;
             color: #333;
         }
         .is-insurance{
-            font-size: 28px; /*px*/
+            font-size: 28px; 
             color: #999;
         }
     }
@@ -169,7 +169,7 @@ import {postPolicyCancel} from '@/api/api.js'
         background-color: #f6f6f6;
         // padding-left: 40px;
         padding: 20px 0 20px 40px;
-        font-size: 32px; /*px*/
+        font-size: 28px; 
         color: #666;
         margin-bottom: 30px;
 
@@ -179,11 +179,11 @@ import {postPolicyCancel} from '@/api/api.js'
     }
     .insurance-sum{
         span:nth-of-type(1){
-            font-size: 32px;/*px*/
+            font-size: 28px;
             color: #999;
         }
         span:nth-of-type(2) {
-            font-size: 32px;/*px*/
+            font-size: 28px;
             color: #333;
             font-weight: bold;
         }
@@ -196,7 +196,7 @@ import {postPolicyCancel} from '@/api/api.js'
         height: 50px;
         background-color: #eee;
         border-radius: 25px;
-        font-size: 34px;/*px*/
+        font-size: 30px;
         color: #666;
         text-align: center;
         line-height: 50px;

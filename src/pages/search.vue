@@ -149,17 +149,17 @@ export default {
                 outline: none;
                 margin-left: 20px;
                 line-height: 50px;
-                font-size: 24px; /*px*/
+                font-size: 24px; 
 
             }
             input::placeholder{
                 color: #999;
-                font-size: 24px; /*px*/
+                font-size: 24px; 
             }
         }
         .cancel{
             color: #3399ff;
-            font-size: 26px;/*px*/
+            font-size: 26px;
         }
     }
     .container{

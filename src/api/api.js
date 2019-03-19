@@ -3,18 +3,18 @@ import Qs from 'qs'
 axios.defaults.widthCredentials = true;
 const API_URL = (function () {
     // 返回请求头，如http://dev等
-    if (/^dev-/.test(location.host)) {
-        return location.protocol + '//dev-'
+    if (/^dev-/.test(location.host) || /^localhost/.test(location.host)) {
+        return 'http://dev-'
     } else if (/^test-/.test(location.host)) {
-        return location.protocol+ '//test-'
+        return 'http://test-'
     } else {
-        return location.protocol + '//'
+        return 'http://'
     }
 })()
 
-if (location.host === '192.168.2.81:3001' ) {  
+if (location.host === '192.168.2.81:3000' ) {  
     // 测试环境的请求地址
-    const PROCOTOL_HEAD = 'http://192.168.2.81:3001'
+    const PROCOTOL_HEAD = 'http://192.168.2.81:3000'
     var post = function (url, params) {
         let paramsStr = '?';
         let fullUrl = '';
@@ -40,7 +40,7 @@ if (location.host === '192.168.2.81:3001' ) {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'POST',
-                url: API_URL+'//dev-open.yunbisai.com'+url,
+                url: API_URL+'open.yunbisai.com'+url,
                 data: Qs.stringify(params),
                 header: {
                     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
@@ -58,7 +58,7 @@ if (location.host === '192.168.2.81:3001' ) {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'POST',
-                url: API_URL+'//api-open.yunbisai.com'+url,
+                url: API_URL+'api.yunbisai.com'+url,
                 data: Qs.stringify(params),
                 header: {
                     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',

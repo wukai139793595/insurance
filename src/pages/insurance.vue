@@ -18,23 +18,25 @@
                 <span>搜索</span>
             </div>
         </div>
-        <scroll @refresh="refresh" @loadmore="loadmore">
-            <div class="container">
-                <person-info 
-                    v-for="(item, index) in insuranceList" :key='index'
-                    @changeState='changeState(index)'
-                    :insured_name='item.insured_name'
-                    :state='item.state'
-                    :title='item.title'
-                    :groupname='item.groupname'
-                    :start_date='item.start_date'
-                    :end_date='item.end_date'
-                    :real_amount='item.real_amount'
-                    :order_id='item.order_id'
-                    :insured_id='item.insured_id'
-                    />
-            </div>            
-        </scroll>
+        <div class="scroll-container">
+            <scroll @refresh="refresh" @loadmore="loadmore">
+                <div class="container">
+                    <person-info 
+                        v-for="(item, index) in insuranceList" :key='index'
+                        @changeState='changeState(index)'
+                        :insured_name='item.insured_name'
+                        :state='item.state'
+                        :title='item.title'
+                        :groupname='item.groupname'
+                        :start_date='item.start_date'
+                        :end_date='item.end_date'
+                        :real_amount='item.real_amount'
+                        :order_id='item.order_id'
+                        :insured_id='item.insured_id'
+                        />
+                </div>            
+            </scroll>
+        </div>
         <transition name="slide">
             <div class="select-content" v-if="isShow">
                 <div class="mask" @click="selectShow($event)"></div>
@@ -154,9 +156,10 @@ export default {
         initData () {
             //按页数进行查保
             this.isClock = true;
+            console.log(111)
             postQueryPolicy({
-                org_id: '32',
-                entrance: 1,
+                // org_id: '32',         //
+                // entrance: 1,
                 begin_time: this.startTime,
                 end_time: this.endTime,
                 state: this.state,
@@ -307,68 +310,76 @@ export default {
             }
         }
     }
-    .container{
-        width: 100%;
-        // .people-wrap{
-        //     width: 702px;
-        //     margin: 0 auto 40px;
-        //     position: relative;
-        //     .name-box{
-        //         width: 100%;
-        //         display: flex;
-        //         justify-content: space-between;
-        //         margin-bottom: 26px;
-        //         .name{
-        //             font-size: 30px; 
-        //             font-weight: bold;
-        //             color: #333;
-        //         }
-        //         .is-insurance{
-        //             font-size: 24px; 
-        //             color: #999;
-        //         }
-        //     }
-        //     .competite-info{
-        //         width: 100%;
-        //         box-sizing: border-box;
-        //         padding-left: 40px;
-        //         font-size: 30px; 
-        //         color: #666;
-        //         margin-bottom: 30px;
-        //         &>div{
-        //             margin-bottom: 10px;
-        //         }
-        //     }
-        //     .insurance-sum{
-        //         span:nth-of-type(1){
-        //             font-size: 26px;
-        //             color: #999;
-        //         }
-        //         span:nth-of-type(2) {
-        //             font-size: 28px;
-        //             color: #333;
-        //             font-weight: bold;
-        //         }
-        //     }
-        //     .surrender-normal{
-        //         position: absolute;
-        //         bottom: 4px;
-        //         right: 4px;
-        //         width: 140px;
-        //         height: 50px;
-        //         background-color: #eee;
-        //         border-radius: 25px;
-        //         font-size: 32px;
-        //         color: #666;
-        //         text-align: center;
-        //         line-height: 50px;
-        //         font-weight: bold;
-        //     }
-        //     .surrender{
-        //         background-color: #3399ff;   
-        //         color: #fff;             
-        //     }
-        // }
+    .scroll-container{
+        position: absolute;
+        top: 200px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        .container{
+            width: 100%;
+            height: 100%;
+            // .people-wrap{
+            //     width: 702px;
+            //     margin: 0 auto 40px;
+            //     position: relative;
+            //     .name-box{
+            //         width: 100%;
+            //         display: flex;
+            //         justify-content: space-between;
+            //         margin-bottom: 26px;
+            //         .name{
+            //             font-size: 30px; 
+            //             font-weight: bold;
+            //             color: #333;
+            //         }
+            //         .is-insurance{
+            //             font-size: 24px; 
+            //             color: #999;
+            //         }
+            //     }
+            //     .competite-info{
+            //         width: 100%;
+            //         box-sizing: border-box;
+            //         padding-left: 40px;
+            //         font-size: 30px; 
+            //         color: #666;
+            //         margin-bottom: 30px;
+            //         &>div{
+            //             margin-bottom: 10px;
+            //         }
+            //     }
+            //     .insurance-sum{
+            //         span:nth-of-type(1){
+            //             font-size: 26px;
+            //             color: #999;
+            //         }
+            //         span:nth-of-type(2) {
+            //             font-size: 28px;
+            //             color: #333;
+            //             font-weight: bold;
+            //         }
+            //     }
+            //     .surrender-normal{
+            //         position: absolute;
+            //         bottom: 4px;
+            //         right: 4px;
+            //         width: 140px;
+            //         height: 50px;
+            //         background-color: #eee;
+            //         border-radius: 25px;
+            //         font-size: 32px;
+            //         color: #666;
+            //         text-align: center;
+            //         line-height: 50px;
+            //         font-weight: bold;
+            //     }
+            //     .surrender{
+            //         background-color: #3399ff;   
+            //         color: #fff;             
+            //     }
+            // }
+        }
     }
     .slide-enter-active{
         transition:all 0.5s ease;

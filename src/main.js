@@ -8,8 +8,12 @@ import  './util/flexible.js'
 import './assets/style/util.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import moment from 'vue-moment'
+import axios from 'axios'
 Vue.config.productionTip = false
 
+axios.defaults.withCredentials = true;
+Vue.prototype.$axios = axios;
+// Vue.use(axios)
 Vue.use(ElementUi)
 Vue.use(moment)
 /* eslint-disable no-new */

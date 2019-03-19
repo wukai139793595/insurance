@@ -7,23 +7,25 @@
             </div>
             <div class="cancel" @click="toInsurance($event)">取消</div>
         </div>
-        <scroll @refresh="refresh" @loadmore="loadmore">
-            <div class="container">
-                <person-info 
-                    v-for="(item, index) in insuranceList" :key='index'
-                    @changeState='changeState(index)'
-                    :insured_name='item.insured_name'
-                    :state='item.state'
-                    :title='item.title'
-                    :groupname='item.groupname'
-                    :start_date='item.start_date'
-                    :end_date='item.end_date'
-                    :real_amount='item.real_amount'
-                    :order_id='item.order_id'
-                    :insured_id='item.insured_id'
-                    />
-            </div>            
-        </scroll>
+        <div class="scroll-container">
+            <scroll @refresh="refresh" @loadmore="loadmore">
+                <div class="container">
+                    <person-info 
+                        v-for="(item, index) in insuranceList" :key='index'
+                        @changeState='changeState(index)'
+                        :insured_name='item.insured_name'
+                        :state='item.state'
+                        :title='item.title'
+                        :groupname='item.groupname'
+                        :start_date='item.start_date'
+                        :end_date='item.end_date'
+                        :real_amount='item.real_amount'
+                        :order_id='item.order_id'
+                        :insured_id='item.insured_id'
+                        />
+                </div>            
+            </scroll>
+        </div>
     </div>
 </template>
 <script>
@@ -162,8 +164,16 @@ export default {
             font-size: 26px;
         }
     }
-    .container{
-        width: 100%;
+    .scroll-container{
+        position: absolute;
+        top: 140px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        .container{
+            width: 100%;
+            height: 100%;
+        }
     }
 }
 </style>
